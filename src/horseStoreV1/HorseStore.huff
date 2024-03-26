@@ -1,3 +1,25 @@
 //send calldata -->function dispatch -->function
 
-#define macro main() = takes(0)  returns(0){}
+
+//60008060093d393df3  -> Contract creation Bytecode
+//XXX  --> Runtime code
+
+#define macro MAIN() = takes(0)  returns(0) {
+
+  //PUSH1 = 0X01 
+  //PUSH2 = 0X0123 as this is 2 byte long  
+  
+   0x00    //[0]
+  // 0x02     //TOP [2,0] BOTTOM
+  calldataload   //[calldata]
+
+  //How do we cut down the calldata ->  func selector?
+  //SHR opcode
+  //0x0102 (bytes)     cast --to-base 0x0102 bin = 0b100000010
+  //1 byes= 8bits
+  //  0b100000010      bin form
+  //258                 dec  form   --> cast --to-base 0x0102 dec
+
+  // 0b100000010 >> 2
+  //  0b01000000
+}
