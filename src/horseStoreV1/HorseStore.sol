@@ -8,6 +8,8 @@ contract HorseStore {
         numberOfHorses = newNumberOfHorses;
     }
 
+    //  cast sig "updateHorseNumber(uint256)"  ==  0xcdfead2e
+
     function readNumberOfHorses() external view returns (uint256) {
         return numberOfHorses;
     }

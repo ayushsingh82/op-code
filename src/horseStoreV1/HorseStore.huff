@@ -4,14 +4,19 @@
 //60008060093d393df3  -> Contract creation Bytecode
 //XXX  --> Runtime code
 
+//visti evm.codes
+//39   CODECOPY
+//3D   RETURNDATASIZE	
+//F3 RETURN
+
 #define macro MAIN() = takes(0)  returns(0) {
 
   //PUSH1 = 0X01 
   //PUSH2 = 0X0123 as this is 2 byte long  
   
-   0x00    //[0]
+   //0x00    //[0]
   // 0x02     //TOP [2,0] BOTTOM
-  calldataload   //[calldata]
+ // calldataload   //[calldata(32)]
 
   //How do we cut down the calldata ->  func selector?
   //SHR opcode
@@ -20,6 +25,28 @@
   //  0b100000010      bin form
   //258                 dec  form   --> cast --to-base 0x0102 dec
 
-  // 0b100000010 >> 2
-  //  0b01000000
-}
+  //0x0102 >> 4 =16
+
+ 
+ //How do we cut down the calldata --> func selector?
+ //64/2=32 bytes->right
+ // we need to right shift 28 bytes , 224 bits
+ //cast --to-base 224 hex  == 0xe0
+
+ //0xe0         //[0xe0, calldata(32)]
+ //shr          //[function selector]
+
+
+0x00 calldataload 0xE0 shr     //[function selector]
+
+//Jump --> function data association with the selector
+//If f_select == updateHorseNumber --> jump to that code
+//If f_select == readNumberOfHorses  --> jump to that code
+
+//  0xcdfead2e == update      by doing   cast sig "updateHorseNumber(uint256)"
+// 0xe026c017  == read         by doing cast sig "readNumberOfHorses()"
+ 
+
+
+}  
+
